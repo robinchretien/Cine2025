@@ -1,0 +1,58 @@
+.titreBarre{
+    text-align: center;
+    border-bottom: 1px solid;
+    line-height: 0.1px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 100px;
+}
+
+.entete {
+    background-image: url(https://fr.web.img2.acsta.net/c_310_420/img/dc/f9/dcf9ee537fa030a222e231363c339f6f.jpg);
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right top;
+    width: 40%;
+    position: absolute;
+    right: 300px;
+    top: 220px;
+}
+
+h2{
+    margin-left: 150px;
+}
+h4 {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.info-film {
+    border: 1px solid black;
+    padding: 40px;
+    width: fit-content;
+    border-radius: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 150px;
+    z-index: 1;
+    margin-bottom: 50px;
+    margin-left: 200px;
+    margin-top: 100px;
+}
+
+.synopsis {
+    position: absolute;
+    left: 150px;
+    top: 700px;
+}
+
+
+.info-film h2 {
+    margin: 0;
+    line-height: 2;
+}

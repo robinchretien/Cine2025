@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title> Accueil </title>
+        <link rel="stylesheet" href="./accueil.css">
+        <script src="Accueil.js"></script>
+    </head>
+
+    <body>
+        <header class="menu">
+            <nav>
+                <ul class="menuNavigation">
+
+                    <li>
+                         <a href="./Accueil.html">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="./Films/films.html">Films</a>
+                    </li>
+                    <li>
+                        <a href="./Ajout/ajout.html">Ajout</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <h1 class="texteBarre">
+            <span style="background-color: white;
+            padding: 0 10px;">
+                Accueil 
+            </span>
+        </h1>
+
+        <div>
+            <input placeholder="Rechercher" id="search" type="search"/>
+        </div>
+        
+        <div> 
+            <table id="table"></table>
+        </div>
+
+    </body>
+</html>
+
+<script>
+    // Données du tableau
+
+    var titleTable = ["Mois", "Jour", "Titre du film"]
+    var data = [
+    { "Mois": "Janvier", "Jour": "15", "Titre du film": "Wolf Man" },
+    { "Mois": "Fevrier", "Jour": "12", "Titre du film": "Captain America: Brave New World" },
+    { "Mois": "Mars", "Jour": "19", "Titre du film": "Blanche Neige" },
+    { "Mois": "Avril", "Jour": "2", "Titre du film": "Minecraft, le film" },
+    { "Mois": "Avril", "Jour": "16", "Titre du film": "Mickey 17" },
+    { "Mois": "Avril", "Jour": "30", "Titre du film": "Thunderbolts" },
+    { "Mois": "Mai", "Jour": "14", "Titre du film": "Destination Finale : Bloodlines" },
+    { "Mois": "Mai", "Jour": "21", "Titre du film": "Lilo & Stitch" },
+    { "Mois": "Mai", "Jour": "21", "Titre du film": "Mission Impossible : Dead Reckoning, partie 2" },
+    { "Mois": "Mai", "Jour": "28", "Titre du film": "Karate Kid : Legends" },
+    { "Mois": "Juin", "Jour": "4", "Titre du film": "Ballerina" },
+    { "Mois": "Juin", "Jour": "11", "Titre du film": "Dragons" },
+    { "Mois": "Juin", "Jour": "18", "Titre du film": "28 ans plus tard" },
+    { "Mois": "Juin", "Jour": "18", "Titre du film": "Elio" },
+    { "Mois": "Juillet", "Jour": "2", "Titre du film": "Jurassic World : Renaissance" },
+    { "Mois": "Juillet", "Jour": "9", "Titre du film": "Superman" },
+    { "Mois": "Juillet", "Jour": "16", "Titre du film": "Les Schtroumpfs" },
+    { "Mois": "Juillet", "Jour": "23", "Titre du film": "Les Quatres Fantastiques" },
+    { "Mois": "Juillet", "Jour": "23", "Titre du film": "Souviens-toi... l'été dernier" },
+    { "Mois": "Octobre", "Jour": "1", "Titre du film": "Saw XI" },
+    { "Mois": "Octobre", "Jour": "8", "Titre du film": "Tron : Ares" },
+    { "Mois": "Octobre", "Jour": "22", "Titre du film": "Kaamelott - Deuxième volet (partie 1)" },
+    { "Mois": "Novembre", "Jour": "5", "Titre du film": "Predator : Badlands" },
+    { "Mois": "Novembre", "Jour": "12", "Titre du film": "Insaisissables 3" },
+    { "Mois": "Novembre", "Jour": "19", "Titre du film": "The Running Man" },
+    { "Mois": "Novembre", "Jour": "26", "Titre du film": "Zootopie 2" },
+    { "Mois": "Novembre", "Jour": "26", "Titre du film": "Wicked Partie 2" },
+    { "Mois": "Decembre", "Jour": "3", "Titre du film": "Five Nights at Freddy's 2" },
+    { "Mois": "Decembre", "Jour": "17", "Titre du film": "Avatar : De feu et de cendre" },
+    { "Mois": "Decembre", "Jour": "17", "Titre du film": "Bob l'éponge" }
+];
+
+
+    var table = new Table(titleTable, data);
+    var searchTimeOut;
+
+    document.getElementById("table").innerHTML 
+    = table.consituteTable();
+
+    document.getElementById("search").addEventListener("keyup", (event) => {
+
+        if(clearTimeout(searchTimeOut));
+        searchTimeOut = setTimeout(() => {
+            console.log(event.target.value);
+            let value = '';
+            value = data.filter(value => value.nom.toLowerCase()
+            .includes(event.target.value.toLowerCase()));
+
+            if(value.length > 0){
+                table.setDataTable(value);
+                document.getElementById("table").innerHTML = table.consituteTable();
+            }
+        }, 500);
+    })
+
+</script>

@@ -17,10 +17,13 @@
             <img src="menu-icon.png" alt="Menu">
         </div>
 
+        <div class="menu-overlay"></div>
+        
         <nav class="menu">
             <ul class="menuNavigation">
-                <li><a href="./Ajout/ajout.html">Ajout</a></li>
-                <li><a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a></li>
+                <li style="--item-index: 0"><a href="./index.html">Accueil</a></li>
+                <li style="--item-index: 1"><a href="./Ajout/ajout.html">Ajout</a></li>
+                <li style="--item-index: 2"><a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a></li>
             </ul>
         </nav>
 
@@ -45,53 +48,27 @@
                 // Menu toggle
                 const menu = document.querySelector('.menu');
                 const menuToggleButton = document.getElementById('menuToggleButton');
-                const body = document.querySelector('body');
+                const menuOverlay = document.querySelector('.menu-overlay');
                 const menuLinks = document.querySelectorAll('.menuNavigation a');
-
-                // État initial - menu fermé sur mobile
-                if (window.innerWidth <= 768) {
-                    menu.classList.add('collapsed');
-                    body.classList.add('menu-collapsed');
-                }
 
                 // Toggle du menu
                 menuToggleButton.addEventListener('click', function() {
-                    menu.classList.toggle('collapsed');
-                    body.classList.toggle('menu-collapsed');
+                    menu.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
                 });
                 
-                // Fermer le menu quand on clique sur un lien (uniquement sur mobile)
+                // Fermer le menu quand on clique sur un lien
                 menuLinks.forEach(link => {
                     link.addEventListener('click', function() {
-                        if (window.innerWidth <= 768) {
-                            menu.classList.add('collapsed');
-                            body.classList.add('menu-collapsed');
-                        }
+                        menu.classList.remove('active');
+                        menuOverlay.classList.remove('active');
                     });
                 });
                 
-                // Fermer le menu quand on clique en dehors (uniquement sur mobile)
-                document.addEventListener('click', function(event) {
-                    const isClickInsideMenu = menu.contains(event.target);
-                    const isClickOnButton = menuToggleButton.contains(event.target);
-                    
-                    if (!isClickInsideMenu && !isClickOnButton && !menu.classList.contains('collapsed') && window.innerWidth <= 768) {
-                        menu.classList.add('collapsed');
-                        body.classList.add('menu-collapsed');
-                    }
-                });
-                
-                // Gestion de la taille de l'écran
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth <= 768) {
-                        // Sur mobile, garder le menu fermé par défaut
-                        menu.classList.add('collapsed');
-                        body.classList.add('menu-collapsed');
-                    } else {
-                        // Sur desktop, ouvrir le menu par défaut
-                        menu.classList.remove('collapsed');
-                        body.classList.remove('menu-collapsed');
-                    }
+                // Fermer le menu quand on clique sur l'overlay
+                menuOverlay.addEventListener('click', function() {
+                    menu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
                 });
             });
         </script>

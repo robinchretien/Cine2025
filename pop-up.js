@@ -7,22 +7,51 @@ function openFilmDetails(film) {
     const popupContainer = document.createElement('div');
     popupContainer.className = 'popup-container';
     
+    const filmTitle = film["Titre du film"];
+    
+    // Formatter le titre pour le nom de fichier (remplacer les caractères spéciaux par des tirets)
+    let formattedTitle = filmTitle
+        .replace(/[:*…]/g, "-") // Remplacer : * et points de suspension unicode
+        .replace(/\.\.\./g, "-") // Remplacer les points de suspension classiques
+        .replace(/['']/g, "") // Supprimer les apostrophes
+        .replace(/[^a-zA-Z0-9\-\s]/g, "-"); // Remplacer tout autre caractère spécial par des tirets
+    
+    // Cas spéciaux pour certains films
+    const specialCases = {
+        "Souviens toi": "Souviens-toi-l-ete-dernier",
+        "Conjuring : L'heure du jugement": "Conjuring-L-heure-du-jugement",
+        "Conjuring : L": "Conjuring-L-heure-du-jugement"
+    };
+    
+    // Vérifier si le titre est dans la liste des cas spéciaux
+    for (const key in specialCases) {
+        if (filmTitle.includes(key)) {
+            formattedTitle = specialCases[key];
+            break;
+        }
+    }
+    
+    const encodedTitle = encodeURIComponent(formattedTitle);
+    
+    // Pour le débogage
+    console.log("Titre original:", filmTitle);
+    console.log("Titre formaté:", formattedTitle);
+    console.log("Titre encodé:", encodedTitle);
+    
     // Contenu de la pop-up
     popupContainer.innerHTML = `
         <div class="popup-close">&times;</div>
         <div class="popup-content">
             <div class="popup-info">
-                <h2>${film["Titre du film"]}</h2>
+                <h2>${filmTitle}</h2>
                 <p><strong>Date de sortie :</strong> ${film.Jour} ${film.Mois}</p>
                 <p><strong>Thème :</strong> test</p>
                 <p><strong>Réalisateur :</strong> test</p>
                 <p><strong>Acteurs principaux :</strong> test</p>
                 <p><strong>Synopsis :</strong> test</p>
             </div>
-            <div class="popup-image">
-                <img src="./affiches/${encodeURIComponent(film["Titre du film"])}.jpg" 
-                     alt="Affiche de ${film["Titre du film"]}"
-                     onerror="this.src='./affiches/default.jpg';">
+            <div class="popup-image" id="popup-image-container">
+                <!-- L'image sera insérée ici par JavaScript -->
             </div>
         </div>
     `;
@@ -40,6 +69,9 @@ function openFilmDetails(film) {
         popupContainer.classList.add('active');
     }, 10);
     
+    // Gestion plus robuste du chargement des images
+    loadImageWithFallbacks(encodedTitle, filmTitle);
+    
     // Fermeture du popup au clic sur le bouton de fermeture
     const closeButton = popupContainer.querySelector('.popup-close');
     closeButton.addEventListener('click', closePopup);
@@ -53,6 +85,40 @@ function openFilmDetails(film) {
     
     // Fermeture du popup avec la touche Echap
     document.addEventListener('keydown', handleEscapeKey);
+}
+
+// Fonction pour charger une image avec fallbacks
+function loadImageWithFallbacks(encodedTitle, originalTitle) {
+    const imageContainer = document.getElementById('popup-image-container');
+    const formats = ['jpg', 'png', 'webp'];
+    let currentFormatIndex = 0;
+    
+    // Créer un élément image
+    const img = document.createElement('img');
+    img.alt = `Affiche de ${originalTitle}`;
+    
+    // Fonction pour essayer le format suivant ou afficher l'image par défaut
+    function tryNextFormat() {
+        if (currentFormatIndex < formats.length) {
+            const format = formats[currentFormatIndex];
+            img.src = `./affiches/${encodedTitle}.${format}`;
+            console.log(`Tentative de chargement: ${img.src}`);
+            currentFormatIndex++;
+        } else {
+            // Si tous les formats ont échoué, utiliser l'image par défaut
+            img.src = './affiches/default.webp';
+            console.log("Utilisation de l'image par défaut");
+        }
+    }
+    
+    // Gestionnaire d'erreur
+    img.onerror = tryNextFormat;
+    
+    // Démarrer avec le premier format
+    tryNextFormat();
+    
+    // Ajouter l'image au conteneur
+    imageContainer.appendChild(img);
 }
 
 // Fonction pour fermer la pop-up

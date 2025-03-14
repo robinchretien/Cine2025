@@ -1,0 +1,146 @@
+/* Styles de la pop-up */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+}
+
+.popup-container {
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    box-shadow: 0 5px 30px rgba(138, 43, 226, 0.5);
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.popup-container.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(138, 43, 226, 0.7);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.popup-close:hover {
+    background-color: #8a2be2;
+    transform: scale(1.1);
+}
+
+.popup-content {
+    display: flex;
+    padding: 30px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .popup-content {
+        flex-direction: column;
+    }
+}
+
+.popup-info {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.popup-info h2 {
+    font-family: 'Sigmar', cursive;
+    color: #8a2be2;
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #8a2be2;
+    padding-bottom: 10px;
+}
+
+.popup-info p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.popup-info strong {
+    color: #8a2be2;
+    font-weight: bold;
+}
+
+.popup-image {
+    width: 300px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.popup-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.popup-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Rendre les lignes du tableau cliquables */
+#table tr:not(:first-child) {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#table tr:not(:first-child):hover {
+    background-color: rgba(138, 43, 226, 0.2) !important;
+}
+
+/* Style pour la version mobile */
+@media (max-width: 768px) {
+    .popup-content {
+        padding: 20px;
+    }
+    
+    .popup-info {
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+    
+    .popup-image {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}

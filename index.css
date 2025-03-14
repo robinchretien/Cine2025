@@ -111,12 +111,19 @@ main {
   margin-bottom: 40px;
 }
 
-/* Styles de la barre de recherche */
-input[type="search"] {
+/* Styles de la barre de recherche et filtres */
+.search-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 80%;
-  padding: 10px;
   margin: 15px auto;
-  display: block;
+  gap: 15px;
+}
+
+input[type="search"] {
+  flex: 1;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid #8a2be2;
   background-color: #1E1E1E;
@@ -125,6 +132,31 @@ input[type="search"] {
 
 input[type="search"]::placeholder {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.month-filter select {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #8a2be2;
+  background-color: #8a2be2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 150px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 12px auto;
+  padding-right: 30px;
+  transition: all 0.3s ease;
+}
+
+.month-filter select:hover {
+  background-color: #9d4ced;
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
 }
 
 /* Styles du tableau */
@@ -183,6 +215,15 @@ table td:nth-child(3) {
 @media (max-width: 768px) {
   .section-accueil .titre-section h1 {
     font-size: 3rem;
+  }
+  
+  .search-controls {
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .month-filter select {
+    width: 100%;
   }
 }
 

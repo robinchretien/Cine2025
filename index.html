@@ -34,8 +34,26 @@
                 </div>
             </section>
 
-            <div>
+            <div class="search-controls">
                 <input placeholder="Chercher mon film..." id="search" type="search"/>
+                
+                <div class="month-filter">
+                    <select id="monthSelector">
+                        <option value="all">Tous les mois</option>
+                        <option value="Janvier">Janvier</option>
+                        <option value="Fevrier">Février</option>
+                        <option value="Mars">Mars</option>
+                        <option value="Avril">Avril</option>
+                        <option value="Mai">Mai</option>
+                        <option value="Juin">Juin</option>
+                        <option value="Juillet">Juillet</option>
+                        <option value="Août">Août</option>
+                        <option value="Septembre">Septembre</option>
+                        <option value="Octobre">Octobre</option>
+                        <option value="Novembre">Novembre</option>
+                        <option value="Decembre">Décembre</option>
+                    </select>
+                </div>
             </div>
             
             <div> 
@@ -69,6 +87,23 @@
                 menuOverlay.addEventListener('click', function() {
                     menu.classList.remove('active');
                     menuOverlay.classList.remove('active');
+                });
+                
+                // Gestion du filtre par mois
+                document.getElementById('monthSelector').addEventListener('change', function() {
+                    const selectedMonth = this.value;
+                    let filteredData;
+                    
+                    if (selectedMonth === 'all') {
+                        filteredData = data; // Tous les films
+                    } else {
+                        filteredData = data.filter(film => 
+                            film.Mois.trim() === selectedMonth.trim()
+                        );
+                    }
+                    
+                    table.setDataTable(filteredData);
+                    document.getElementById("table").innerHTML = table.consituteTable();
                 });
             });
         </script>

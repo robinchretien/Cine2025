@@ -12,9 +12,7 @@ function openFilmDetails(film) {
     // Formatter le titre pour le nom de fichier (remplacer les caractères spéciaux par des tirets)
     let formattedTitle = filmTitle
         .replace(/[:*…]/g, "-") // Remplacer : * et points de suspension unicode
-        .replace(/\.\.\./g, "-") // Remplacer les points de suspension classiques
-        .replace(/['']/g, "") // Supprimer les apostrophes
-        .replace(/[^a-zA-Z0-9\-\s]/g, "-"); // Remplacer tout autre caractère spécial par des tirets
+        .replace(/\.\.\./g, "-"); // Remplacer les points de suspension classiques
     
     // Cas spéciaux pour certains films
     const specialCases = {

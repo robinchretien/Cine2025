@@ -1,109 +1,701 @@
 <!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title> Accueil </title>
-        <link rel="stylesheet" href="./index.css">
-        <script src="Accueil.js"></script>
-    </head>
+<html>
+<head>
+  <title>Mon Portfolio</title>
+  <link rel="stylesheet" href="Accueil.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sigmar&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="menuToggleButton">
+    <img src="menu-icon.png" alt="Menu">
+  </div>
 
-    <body>
-        <header class="menu">
-            <nav>
-                <ul class="menuNavigation">
+  <nav class="menu">
+    <ul class="menuNavigation">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">A propos</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#formations">Formations</a></li>
+      <li><a href="#hobbies">Hobbies</a></li>
+    </ul>
+  </nav>
 
-                    <li>
-                         <a href="./index.html">Accueil</a>
-                    </li>
-                    <li>
-                        <a href="./Films/films.html">Films</a>
-                    </li>
-                    <li>
-                        <a href="./Ajout/ajout.html">Ajout</a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+  <main>
+    <!-- Section Accueil -->
+    <section id="accueil" class="section-accueil">
+      <div class="titre-section">
+        <h1>MON PORTFOLIO</h1>
+      </div>
+      
+      <div class="accueil-image-container">
+        <img src="Accueilimage.jpg" alt="Image d'accueil" class="accueil-image">
+      </div>
+      
+      <div class="accueil-nom">
+        <h2>Robin Chrétien</h2>
+      </div>
+    </section>
+    
+    <div class="separateur"></div>
 
-        <h1 class="texteBarre">
-            <span style="background-color: white;
-            padding: 0 10px;">
-                Accueil 
-            </span>
-        </h1>
+    <!-- Section À propos -->
+    <section id="apropos" class="section-apropos">
+      <div class="titre-section">
+        <h2>À PROPOS</h2>
+      </div>
+      
+      <div class="texte-presentation">
+        <p>Actuellement au CESI pour un <span class="highlight">Bachelor de 3 ans en Développement Informatique</span>, je suis en première année derrière un BTS de Comptabilité et Gestion.</p>
+        <p>Depuis plusieurs mois je travail sur différents projets afin de développer mes connaissances en développement. Que ce soit de la <span class="highlight">base de donnée, du web, ou autre</span>, je suis très intéréssé pour faire évolué mon apprentissage.</p>
+      </div>
+      
+      <div class="boutons-container">
+        <a href="CV_Robin_Chretien.pdf" class="bouton-action" target="_blank">Ouvir mon CV</a>
+        <a href="https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAEwbOx8BRAahkwp3pZ0SQIjGEGWv2br96fs&keywords=robin%20chretien&origin=RICH_QUERY_SUGGESTION&position=0&searchId=093dc2f8-5d32-4a95-a12c-59fcc0350b64&sid=*u)&spellCorrectionEnabled=false" class="bouton-action" target="_blank">LinkedIn</a>
+        <a href="mailto:robin.chretien05@gmail.com" class="bouton-action">Envoyer un mail</a>
+      </div>
+    </section>
 
-        <div>
-            <input placeholder="Rechercher" id="search" type="search"/>
+    <!-- Section Projets -->
+    <section id="projets" class="section-projets">
+      <div class="separateur"></div>
+      
+      <div class="titre-section">
+        <h2>PROJETS</h2>
+      </div>
+      
+      <div class="filtres-projets">
+        <button class="filtre-btn active" data-filtre="tous">Tous</button>
+        <button class="filtre-btn" data-filtre="personnels">Personnels</button>
+        <button class="filtre-btn" data-filtre="formation">En Formation</button>
+      </div>
+      
+      <div class="projets-container">
+        <!-- Projet 1 - Personnel -->
+        <div class="projets" data-type="personnels">
+          <h3>Ciné2025</h3>
+          <p>Site des films de 2025</p>
+          <a href="#" class="voir-plus" data-projet="projet1">Voir plus <span class="fleche">→</span></a>
         </div>
         
-        <div> 
-            <table id="table"></table>
+        <!-- Projet 2 - Personnel -->
+        <div class="projets" data-type="personnels">
+          <h3>Repertory Card</h3>
+          <p>Site de carte à jouer</p>
+          <a href="#" class="voir-plus" data-projet="projet2">Voir plus <span class="fleche">→</span></a>
+        </div>
+        
+        <!-- Projet 3 - Formation -->
+        <div class="projets" data-type="formation">
+          <h3>Cardar</h3>
+          <p>Site de carte graphique</p>
+          <a href="#" class="voir-plus" data-projet="projet3">Voir plus <span class="fleche">→</span></a>
+        </div>
+        
+        <!-- Projet 4 - Formation -->
+        <div class="projets" data-type="formation">
+          <h3>Jeu de l'oie</h3>
+          <p>Logiciel de jeu de l'oie</p>
+          <a href="#" class="voir-plus" data-projet="projet4">Voir plus <span class="fleche">→</span></a>
+        </div>
+        
+        <!-- Projet 5 - Formation -->
+        <div class="projets" data-type="formation">
+          <h3>Homer</h3>
+          <p>Application mobile de messagerie</p>
+          <a href="#" class="voir-plus" data-projet="projet5">Voir plus <span class="fleche">→</span></a>
         </div>
 
-    </body>
-</html>
+        <!-- Projet 6 - Formation -->
+        <div class="projets" data-type="formation">
+          <h3>Concert</h3>
+          <p>Site et Application de concert</p>
+          <a href="#" class="voir-plus" data-projet="projet6">Voir plus <span class="fleche">→</span></a>
+        </div>
 
-<script>
-    // Données du tableau
+      </div>
 
-    var titleTable = ["Mois", "Jour", "Titre du film"]
-    var data = [
-    { "Mois": "Janvier", "Jour": "15", "Titre du film": "Wolf Man" },
-    { "Mois": "Fevrier", "Jour": "12", "Titre du film": "Captain America: Brave New World" },
-    { "Mois": "Mars", "Jour": "19", "Titre du film": "Blanche Neige" },
-    { "Mois": "Avril", "Jour": "2", "Titre du film": "Minecraft, le film" },
-    { "Mois": "Avril", "Jour": "16", "Titre du film": "Mickey 17" },
-    { "Mois": "Avril", "Jour": "30", "Titre du film": "Thunderbolts" },
-    { "Mois": "Mai", "Jour": "14", "Titre du film": "Destination Finale : Bloodlines" },
-    { "Mois": "Mai", "Jour": "21", "Titre du film": "Lilo & Stitch" },
-    { "Mois": "Mai", "Jour": "21", "Titre du film": "Mission Impossible : Dead Reckoning, partie 2" },
-    { "Mois": "Mai", "Jour": "28", "Titre du film": "Karate Kid : Legends" },
-    { "Mois": "Juin", "Jour": "4", "Titre du film": "Ballerina" },
-    { "Mois": "Juin", "Jour": "11", "Titre du film": "Dragons" },
-    { "Mois": "Juin", "Jour": "18", "Titre du film": "28 ans plus tard" },
-    { "Mois": "Juin", "Jour": "18", "Titre du film": "Elio" },
-    { "Mois": "Juillet", "Jour": "2", "Titre du film": "Jurassic World : Renaissance" },
-    { "Mois": "Juillet", "Jour": "9", "Titre du film": "Superman" },
-    { "Mois": "Juillet", "Jour": "16", "Titre du film": "Les Schtroumpfs" },
-    { "Mois": "Juillet", "Jour": "23", "Titre du film": "Les Quatres Fantastiques" },
-    { "Mois": "Juillet", "Jour": "23", "Titre du film": "Souviens-toi... l'été dernier" },
-    { "Mois": "Octobre", "Jour": "1", "Titre du film": "Saw XI" },
-    { "Mois": "Octobre", "Jour": "8", "Titre du film": "Tron : Ares" },
-    { "Mois": "Octobre", "Jour": "22", "Titre du film": "Kaamelott - Deuxième volet (partie 1)" },
-    { "Mois": "Novembre", "Jour": "5", "Titre du film": "Predator : Badlands" },
-    { "Mois": "Novembre", "Jour": "12", "Titre du film": "Insaisissables 3" },
-    { "Mois": "Novembre", "Jour": "19", "Titre du film": "The Running Man" },
-    { "Mois": "Novembre", "Jour": "26", "Titre du film": "Zootopie 2" },
-    { "Mois": "Novembre", "Jour": "26", "Titre du film": "Wicked Partie 2" },
-    { "Mois": "Decembre", "Jour": "3", "Titre du film": "Five Nights at Freddy's 2" },
-    { "Mois": "Decembre", "Jour": "17", "Titre du film": "Avatar : De feu et de cendre" },
-    { "Mois": "Decembre", "Jour": "17", "Titre du film": "Bob l'éponge" }
-];
+      <!-- Modal pour les détails des projets -->
+      <div id="projet-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div id="projet-details">
+            <!-- Le contenu sera injecté dynamiquement par JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section Compétences -->
+    <section id="competences" class="section-competences">
+      <div class="separateur"></div>
+      
+      <div class="titre-section">
+        <h2>COMPÉTENCES</h2>
+      </div>
+      
+      <div class="competences-container">
+        <div class="competences-grid">
+          <!-- Première ligne -->
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="HTML.png" alt="Logo compétence 1">
+            </div>
+            <div class="competence-titre">HTML</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="JavaScript.png" alt="Logo compétence 2">
+            </div>
+            <div class="competence-titre">JavaScript</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="CSS.png" alt="Logo compétence 3">
+            </div>
+            <div class="competence-titre">CSS</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="PHP.png" alt="Logo compétence 4">
+            </div>
+            <div class="competence-titre">PHP</div>
+          </div>
+          
+          <!-- Deuxième ligne -->
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="Angular.png" alt="Logo compétence 5">
+            </div>
+            <div class="competence-titre">Angular</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="Python.png" alt="Logo compétence 6">
+            </div>
+            <div class="competence-titre">Python</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="SQL.png" alt="Logo compétence 7">
+            </div>
+            <div class="competence-titre">SQL</div>
+          </div>
+          
+          <div class="competence-item">
+            <div class="competence-logo">
+              <!-- Image à remplacer -->
+              <img src="Office365.png" alt="Logo compétence 8">
+            </div>
+            <div class="competence-titre">Office 365</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section Expériences -->
+    <section id="experience" class="section-experience">
+      <div class="separateur"></div>
+      
+      <div class="titre-section">
+        <h2>EXPÉRIENCES</h2>
+      </div>
+      
+      <div class="experiences-container">
+        <!-- Expérience 1 - CNRS -->
+        <div class="experience-card">
+          <div class="experience-image">
+            <img src="CNRS.jpg" alt="CNRS">
+          </div>
+          <div class="experience-content">
+            <h3>CNRS</h3>
+            <p class="experience-date">Septembre 2022 - Août 2024</p>
+            <p class="experience-description">Alternant en comptabilité dans le pôle Gestion des dépenses.</p>
+            <a href="https://www.cnrs.fr/" class="experience-link" target="_blank">Lien</a>
+          </div>
+        </div>
+        
+        <!-- Expérience 2 - Vergers du Coteau -->
+        <div class="experience-card">
+          <div class="experience-image">
+            <img src="VergersDuCoteau.jpg" alt="Vergers du Coteau">
+          </div>
+          <div class="experience-content">
+            <h3>Vergers du Coteau</h3>
+            <p class="experience-date">Août 2022</p>
+            <p class="experience-description">Cueilleur de fruit lors de la récolte.</p>
+            <a href="https://vergers-du-coteau.fr/" class="experience-link" target="_blank">Lien</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Section Formations -->
+    <section id="formations" class="section-formations">
+      <div class="separateur"></div>
+      
+      <div class="titre-section">
+        <h2>FORMATIONS</h2>
+      </div>
+      
+      <div class="formations-container">
+        <!-- Formation 1 - CESI -->
+        <div class="formation-card">
+          <div class="formation-image">
+            <img src="CESI.png" alt="CESI">
+          </div>
+          <div class="formation-content">
+            <h3>CESI à Nancy</h3>
+            <p class="formation-date">2024 - 2027</p>
+            <p class="formation-description">Bachelor en Développement Informatique en tant qu'étudiant- Formation sur 3 ans</p>
+            <a href="https://www.cesi.fr/" class="formation-link" target="_blank">Lien</a>
+          </div>
+        </div>
+        
+        <!-- Formation 2 - BTS George de la Tour -->
+        <div class="formation-card">
+          <div class="formation-image">
+            <img src="BTSCG.png" alt="BTS George de la Tour">
+          </div>
+          <div class="formation-content">
+            <h3>BTS CG - Georges de la Tour à Nancy</h3>
+            <p class="formation-date">2022 - 2024</p>
+            <p class="formation-description">BTS Comptabilité et Gestion de 2 ans en alternance avec le CNRS, non diplômé</p>
+            <a href="https://www.georges-delatour-nancy.fr/" class="formation-link" target="_blank">Lien</a>
+          </div>
+        </div>
+        
+        <!-- Formation 3 - Lycée Louis Majorelle -->
+        <div class="formation-card">
+          <div class="formation-image">
+            <img src="Lycée.jpg" alt="Lycée Louis Majorelle">
+          </div>
+          <div class="formation-content">
+            <h3>Lycée Louis Majorelle à Toul</h3>
+            <p class="formation-date">2019 - 2022</p>
+            <p class="formation-description">Baccalauréat STMG - Spécialité Gestion et Finance</p>
+            <a href="https://lyc-majorelle.monbureaunumerique.fr/" class="formation-link" target="_blank">Lien</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section Hobbies -->
+    <section id="hobbies" class="section-hobbies">
+      <div class="separateur"></div>
+      
+      <div class="titre-section">
+        <h2>HOBBIES</h2>
+      </div>
+      
+      <div class="hobbies-container">
+        <!-- Hobby 1 - Cinéma -->
+        <div class="hobby-card">
+          <div class="hobby-title">Cinéma</div>
+          <a href="#" class="voir-plus" data-hobby="cinema">Voir plus <span class="fleche">→</span></a>
+        </div>
+        
+        <!-- Hobby 2 - Concert -->
+        <div class="hobby-card">
+          <div class="hobby-title">Concert</div>
+          <a href="#" class="voir-plus" data-hobby="concert">Voir plus <span class="fleche">→</span></a>
+        </div>
+        
+        <!-- Hobby 3 - Lecture -->
+        <div class="hobby-card">
+          <div class="hobby-title">Lecture</div>
+          <a href="#" class="voir-plus" data-hobby="lecture">Voir plus <span class="fleche">→</span></a>
+        </div>
+      </div>
+      
+      <!-- Modal pour les détails des hobbies -->
+      <div id="hobby-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div id="hobby-details">
+            <!-- Le contenu sera injecté dynamiquement par JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    var table = new Table(titleTable, data);
-    var searchTimeOut;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menu toggle
+      const menu = document.querySelector('.menu');
+      const menuToggleButton = document.getElementById('menuToggleButton');
+      const body = document.querySelector('body');
+      const menuLinks = document.querySelectorAll('.menuNavigation a');
 
-    document.getElementById("table").innerHTML 
-    = table.consituteTable();
+      // État initial - menu fermé sur mobile
+      if (window.innerWidth <= 768) {
+        menu.classList.add('collapsed');
+        body.classList.add('menu-collapsed');
+      }
 
-    document.getElementById("search").addEventListener("keyup", (event) => {
-
-        if(clearTimeout(searchTimeOut));
-        searchTimeOut = setTimeout(() => {
-            console.log(event.target.value);
-            let value = '';
-            value = data.filter(value => value.nom.toLowerCase()
-            .includes(event.target.value.toLowerCase()));
-
-            if(value.length > 0){
-                table.setDataTable(value);
-                document.getElementById("table").innerHTML = table.consituteTable();
+      // Toggle du menu
+      menuToggleButton.addEventListener('click', function() {
+        menu.classList.toggle('collapsed');
+        body.classList.toggle('menu-collapsed');
+      });
+      
+      // Fermer le menu quand on clique sur un lien (uniquement sur mobile)
+      menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            menu.classList.add('collapsed');
+            body.classList.add('menu-collapsed');
+          }
+        });
+      });
+      
+      // Fermer le menu quand on clique en dehors (uniquement sur mobile)
+      document.addEventListener('click', function(event) {
+        const isClickInsideMenu = menu.contains(event.target);
+        const isClickOnButton = menuToggleButton.contains(event.target);
+        
+        if (!isClickInsideMenu && !isClickOnButton && !menu.classList.contains('collapsed') && window.innerWidth <= 768) {
+          menu.classList.add('collapsed');
+          body.classList.add('menu-collapsed');
+        }
+      });
+      
+      // Gestion de la taille de l'écran
+      window.addEventListener('resize', function() {
+        if (window.innerWidth <= 768) {
+          // Sur mobile, garder le menu fermé par défaut
+          menu.classList.add('collapsed');
+          body.classList.add('menu-collapsed');
+        } else {
+          // Sur desktop, ouvrir le menu par défaut
+          menu.classList.remove('collapsed');
+          body.classList.remove('menu-collapsed');
+        }
+      });
+      
+      // Gestion des filtres de projets
+      const filtresBtns = document.querySelectorAll('.filtre-btn');
+      const projetCards = document.querySelectorAll('.projets');
+      
+      filtresBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Retirer la classe active de tous les boutons
+          filtresBtns.forEach(btn => btn.classList.remove('active'));
+          
+          // Ajouter la classe active au bouton cliqué
+          this.classList.add('active');
+          
+          // Filtrer les projets
+          const filtre = this.dataset.filtre;
+          
+          // Afficher/masquer les projets selon le filtre
+          projetCards.forEach(card => {
+            if (filtre === 'tous') {
+              card.style.display = 'block';
+            } else {
+              if (card.dataset.type === filtre) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
             }
-        }, 500);
-    })
+          });
+        });
+      });
+      
+      // Gestion de la modal pour les détails des projets
+      const projetModal = document.getElementById('projet-modal');
+      const projetDetails = document.getElementById('projet-details');
+      const projetCloseModal = projetModal.querySelector('.close-modal');
+      const voirPlusBtns = document.querySelectorAll('.voir-plus[data-projet]');
+      
+      // Données des projets
+      const projetsData = {
+        projet1: {
+          titre: "Ciné2025",
+          description: "Développement d'un site web sur les films les plus attendus de 2025.",
+          date: "Janvier 2025 - Aujourd'hui",
+          technologies: ["HTML", "CSS", "JavaScript"],
+          taches: [
+            "Développement d'un site avec HTML",
+            "Mise en place du style du site avec CSS",
+            "Utilisation des tableaux, formulaires, et barre de recherches en HTML et JS"
+          ]
+        },
+        projet2: {
+          titre: "Repertory Card",
+          description: "Création d'un site web de référence pour cartes de collection.",
+          date: "Fevrier 2025 - Aujourd'hui",
+          technologies: ["Angular","HTML", "CSS", "JavaScript"],
+          taches: [
+            "Développement d'un site web en Angular",
+            "Création de visuel de carte",
+          ]
+        },
+        projet3: {
+          titre: "Cardar",
+          description: "Développement d'un site de référence de carte graphique.",
+          date: "Décembre 2024 - Fevrier 2025",
+          technologies: ["SQL","HTML", "CSS", "JavaScript", "NoteJS"],
+          taches: [
+            "Développement d'un site web avec HTML",
+            "Intégration d'une base de donnée SSMS",
+            "Récupération de données pour 3000 cartes graphiques",
+            "Présentation du projet"
+          ]
+        },
+        projet4: {
+          titre: "Jeu de l'oie",
+          description: "Création du jeu de l'oie en Python.",
+          date: "Octobre 2024 - Décembre 2024",
+          technologies: ["Python", "JSON"],
+          taches: [
+            "Développement d'un jeu Python",
+            "Création d'un plateau de jeu avec Tkinter",
+            "Intégration d'un algorithme",
+            "Présentation du projet"
+          ]
+        },
+        projet5: {
+          titre: "Homer",
+          description: "Création d'une application mobile de messagerie instantanée.",
+          date: "Décembre 2024 - Aujourd'hui",
+          technologies: ["Flutter", "PHP", "Python", "TypeScript", "Slim Framework", "Hono"],
+          taches: [
+            "Conception d'une application mobile",
+            "Développement du Back-End et du Front-End",
+            "Mise en place de schémas d'analyse",
+            "Organisation du groupe du projet et Présentation"
+          ]
+        },
+        projet6: {
+          titre: "Concert",
+          description: "Création d'un site web et d'une application mobile de communication sur les concerts.",
+          date: "Décembre 2024 - Aujourd'hui",
+          technologies: ["Flutter", "PHP", "Python", "TypeScript", "Slim Framework", "Hono"],
+          taches: [
+            "Création d'un site web",
+            "Conception d'une application mobile",
+            "Développement du Back-End et du Front-End",
+            "Mise en place de schémas d'analyse",
+            "Organisation du groupe du projet et Présentation"
+          ]
+        }
+      };
+      
+      // Ouvrir la modal avec les détails du projet
+      voirPlusBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const projetId = this.dataset.projet;
+          const projet = projetsData[projetId];
+          
+          if (projet) {
+            // Construire le contenu HTML pour les détails du projet
+            let technologiesHTML = '';
+            projet.technologies.forEach(tech => {
+              technologiesHTML += `<span>${tech}</span>`;
+            });
+            
+            let tachesHTML = '<ul>';
+            projet.taches.forEach(tache => {
+              tachesHTML += `<li>${tache}</li>`;
+            });
+            tachesHTML += '</ul>';
+            
+            // Injecter le HTML dans la modal
+            projetDetails.innerHTML = `
+              <h3>${projet.titre}</h3>
+              <p class="projet-date">${projet.date}</p>
+              <p class="projet-description">${projet.description}</p>
+              <h4>Tâches réalisées:</h4>
+              ${tachesHTML}
+              <div class="projet-technologies">
+                <h4>Technologies utilisées:</h4>
+                ${technologiesHTML}
+              </div>
+            `;
+            
+            // Afficher la modal
+            projetModal.style.display = 'block';
+          }
+        });
+      });
+      
+      // Fermer la modal des projets
+      projetCloseModal.addEventListener('click', function() {
+        projetModal.style.display = 'none';
+      });
+      
+      // Gestion de la modal pour les détails des hobbies
+      const hobbyModal = document.getElementById('hobby-modal');
+      const hobbyDetails = document.getElementById('hobby-details');
+      const hobbyCloseModal = hobbyModal.querySelector('.close-modal');
+      const hobbyVoirPlusBtns = document.querySelectorAll('.voir-plus[data-hobby]');
+      
+      // Données des hobbies
+      const hobbiesData = {
+        cinema: {
+          titre: "Cinéma",
+          description: "Depuis petit, le cinéma a toujours été au cœur de ma vie et j'essaie toujours de mieux connaître cet endroit vaste.",
+          favoris: [
+            "Juré n°2 de Clint Eastwood",
+            "Seven de David Fincher",
+            "Bullet Train de David Leitch",
+            "Once Upon a Time… in Hollywood de Quentin Tarantino",
+            "Shutter Island de Martin Scorsese"
+          ]
+        },
+        concert: {
+          titre: "Concert",
+          description: "Les concerts sont depuis peu ma source de liberté. Pouvoir voir et écouter de talentueux musiciens et chanteurs me fait vibrer.",
+          favoris: [
+            "Set It Off à Zurick en 2025",
+            "Mass Hysteria à Nancy en 2024",
+            "Julien Doré à Strasbourg en 2025",
+            "Reaven à Maxéville en 2024",
+            "Lenny Kravitz à Amneville en 2025"
+          ]
+        },
+        lecture: {
+          titre: "Lecture",
+          description: "La lecture est quelque chose à part. C'est quelque chose de calme, reposant et en même temps débordant d'imagination, ce qui en fait un univers riche de mots très plaisant pour moi.",
+          favoris: [
+            "Je me manque de Adrien Vague à l'âme",
+            "La ligne verte de Stephen King",
+            "La planète des singes de Pierre Boulle",
+            "Voyage au centre de la terre de Jules Verne",
+            "Le Code de Cyrus North"
+          ]
+        }
+      };
+      
+      // Ouvrir la modal avec les détails du hobby
+      hobbyVoirPlusBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const hobbyId = this.dataset.hobby;
+          const hobby = hobbiesData[hobbyId];
+          
+          if (hobby) {
+            // Construire le contenu HTML pour les détails du hobby
+            let favorisHTML = '<ul>';
+            hobby.favoris.forEach(favori => {
+              favorisHTML += `<li>${favori}</li>`;
+            });
+            favorisHTML += '</ul>';
+            
+            // Injecter le HTML dans la modal
+            hobbyDetails.innerHTML = `
+              <h3>${hobby.titre}</h3>
+              <p class="hobby-description">${hobby.description}</p>
+              <h4>Mes favoris:</h4>
+              ${favorisHTML}
+            `;
+            
+            // Afficher la modal
+            hobbyModal.style.display = 'block';
+          }
+        });
+      });
+      
+      // Fermer la modal des hobbies
+      hobbyCloseModal.addEventListener('click', function() {
+        hobbyModal.style.display = 'none';
+      });
+      
+      // Fermer les modals si on clique en dehors du contenu
+      window.addEventListener('click', function(e) {
+        if (e.target === projetModal) {
+          projetModal.style.display = 'none';
+        }
+        if (e.target === hobbyModal) {
+          hobbyModal.style.display = 'none';
+        }
+      });
+    });
+  </script>
 
-</script>
+    <script>
+        // Données du tableau
+
+        var titleTable = ["Mois", "Jour", "Titre du film"]
+        var data = [
+        { "Mois": "Janvier", "Jour": "15", "Titre du film": "Wolf Man" },
+        { "Mois": "Fevrier", "Jour": "12", "Titre du film": "Captain America: Brave New World" },
+        { "Mois": "Mars", "Jour": "19", "Titre du film": "Blanche Neige" },
+        { "Mois": "Avril", "Jour": "2", "Titre du film": "Minecraft, le film" },
+        { "Mois": "Avril", "Jour": "16", "Titre du film": "Mickey 17" },
+        { "Mois": "Avril", "Jour": "30", "Titre du film": "Thunderbolts" },
+        { "Mois": "Mai", "Jour": "14", "Titre du film": "Destination Finale : Bloodlines" },
+        { "Mois": "Mai", "Jour": "21", "Titre du film": "Lilo & Stitch" },
+        { "Mois": "Mai", "Jour": "21", "Titre du film": "Mission Impossible : Dead Reckoning, partie 2" },
+        { "Mois": "Mai", "Jour": "28", "Titre du film": "Karate Kid : Legends" },
+        { "Mois": "Juin", "Jour": "4", "Titre du film": "Ballerina" },
+        { "Mois": "Juin", "Jour": "11", "Titre du film": "Dragons" },
+        { "Mois": "Juin", "Jour": "18", "Titre du film": "28 ans plus tard" },
+        { "Mois": "Juin", "Jour": "18", "Titre du film": "Elio" },
+        { "Mois": "Juillet", "Jour": "2", "Titre du film": "Jurassic World : Renaissance" },
+        { "Mois": "Juillet", "Jour": "9", "Titre du film": "Superman" },
+        { "Mois": "Juillet", "Jour": "16", "Titre du film": "Les Schtroumpfs" },
+        { "Mois": "Juillet", "Jour": "23", "Titre du film": "Les Quatres Fantastiques" },
+        { "Mois": "Juillet", "Jour": "23", "Titre du film": "Souviens-toi... l'été dernier" },
+        { "Mois": "Octobre", "Jour": "1", "Titre du film": "Saw XI" },
+        { "Mois": "Octobre", "Jour": "8", "Titre du film": "Tron : Ares" },
+        { "Mois": "Octobre", "Jour": "22", "Titre du film": "Kaamelott - Deuxième volet (partie 1)" },
+        { "Mois": "Novembre", "Jour": "5", "Titre du film": "Predator : Badlands" },
+        { "Mois": "Novembre", "Jour": "12", "Titre du film": "Insaisissables 3" },
+        { "Mois": "Novembre", "Jour": "19", "Titre du film": "The Running Man" },
+        { "Mois": "Novembre", "Jour": "26", "Titre du film": "Zootopie 2" },
+        { "Mois": "Novembre", "Jour": "26", "Titre du film": "Wicked Partie 2" },
+        { "Mois": "Decembre", "Jour": "3", "Titre du film": "Five Nights at Freddy's 2" },
+        { "Mois": "Decembre", "Jour": "17", "Titre du film": "Avatar : De feu et de cendre" },
+        { "Mois": "Decembre", "Jour": "17", "Titre du film": "Bob l'éponge" }
+    ];
+
+
+        var table = new Table(titleTable, data);
+        var searchTimeOut;
+
+        document.getElementById("table").innerHTML 
+        = table.consituteTable();
+
+        document.getElementById("search").addEventListener("keyup", (event) => {
+
+            if(clearTimeout(searchTimeOut));
+            searchTimeOut = setTimeout(() => {
+                console.log(event.target.value);
+                let value = '';
+                value = data.filter(value => value.nom.toLowerCase()
+                .includes(event.target.value.toLowerCase()));
+
+                if(value.length > 0){
+                    table.setDataTable(value);
+                    document.getElementById("table").innerHTML = table.consituteTable();
+                }
+            }, 500);
+        })
+
+    </script>
+    
+</body>
+</html>

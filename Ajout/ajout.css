@@ -3,60 +3,89 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
-    padding-top: 60px; /* Pour laisser de l'espace pour le menu fixe */
+    background-color: #1E1E1E;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .centerElement {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-input, button {
+input, select, button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     box-sizing: border-box;
+    background-color: #2d2d2d;
+    color: white;
+    border: 1px solid #8a2be2;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .date-container {
     display: flex;
     justify-content: space-between;
+    gap: 5px; /* Réduit l'écart entre les sélecteurs */
 }
 
-.date-container input {
-    width: 30%;
+.date-container select {
+    width: 49.5%; /* Augmenté pour remplir l'espace disponible */
 }
 
 button {
-    background-color: black;
+    background-color: #8a2be2;
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 button:hover {
-    background-color: green;
+    background-color: #9d4ced;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(138, 43, 226, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 select {
-    width: 30%;
-    padding: 10px;
-    box-sizing: border-box;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%;
+    background-size: 12px auto;
+    padding-right: 30px;
 }
 
-select::-ms-expand {
-    display: none;
-}
-
-.date-container input,
-.date-container select {
-    width: 30%;
+/* Adaptations pour les écrans mobiles */
+@media (max-width: 768px) {
+    .centered-form {
+        max-width: 90%;
+        padding: 20px;
+    }
+    
+    .date-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .date-container select {
+        width: 100%;
+    }
 }

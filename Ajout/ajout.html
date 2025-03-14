@@ -2,34 +2,36 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title> Ajout </title>
+        <title>Ajout</title>
         <link rel="stylesheet" href="../index.css">
         <link rel="stylesheet" href="./ajout.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sigmar&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
-        <header class="menu">
-            <nav>
-                <ul class="menuNavigation">
+        <div id="menuToggleButton">
+            <img src="../menu-icon.png" alt="Menu">
+        </div>
 
-                    <li>
-                         <a href="../index.html">Accueil</a>
-                    </li>
-                    <li>
-                        <a href="../Films/films.html">Films</a>
-                    </li>
-                    <li>
-                        <a href="./ajout.html">Ajout</a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        <nav class="menu">
+            <ul class="menuNavigation">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="https://www.youtube.com/shorts/Qi_bGQa4Eow" target="_blank">Lien</a></li>
+            </ul>
+        </nav>
 
-        <body>
-            <form id="form" name="form"class="centered-form">
+        <main>
+            <section class="section-accueil">
+                <div class="titre-section">
+                    <h1>Ajouter un film</h1>
+                </div>
+            </section>
+
+            <form id="form" name="form" class="centered-form">
                 <div class="centerElement date-container">
                     <select name="jour" id="jour">
                         <option value="" disabled selected>Jour</option>
@@ -54,24 +56,10 @@
                         <option value="11">Novembre</option>
                         <option value="12">Décembre</option>
                     </select>
-                    <select name="annee" id="annee">
-                        <option value="" disabled selected>Année</option>
-                        <option value="01">2025</option>
-                        <option value="02">2026</option>
-                        <option value="03">2027</option>
-                        <option value="04">2028</option>
-                        <option value="05">2029</option>
-                        <option value="06">2030</option>
-                    </select>
                 </div>
                 
-
                 <div class="centerElement">
                     <input name="titre" placeholder="Titre" id="titre" type="text"/> 
-                </div>
-
-                <div class="centerElement">
-                    <input name="note" placeholder="Note" id="note" type="text"/> 
                 </div>
 
                 <div class="centerElement">
@@ -80,10 +68,6 @@
 
                 <div class="centerElement">
                     <input name="realisateur" placeholder="Réalisateur" id="realisateur" type="text"/> 
-                </div>
-
-                <div class="centerElement">
-                    <input name="producteur" placeholder="Producteur" id="producteur" type="text"/> 
                 </div>
 
                 <div class="centerElement">
@@ -101,49 +85,104 @@
                 <div class="centerElement">
                     <button type="submit" id="enregistrer"> Enregistrer </button>
                 </div>
-                  
             </form>
-        </body>
-</html>
+        </main>
 
-<script>
-    document.getElementById('form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        console.log(event);
-        formSend(event);
-    })
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Menu toggle
+                const menu = document.querySelector('.menu');
+                const menuToggleButton = document.getElementById('menuToggleButton');
+                const body = document.querySelector('body');
+                const menuLinks = document.querySelectorAll('.menuNavigation a');
 
-    function formSend(eventData){
-        let object = {};
-        let isMissing = false;
-
-        for (let idName of eventData.target){
-            console.log(idName.value);
-            if(idName.value === '' && idName.type === 'text'){
-                isMissing = true;
-            }
-
-            if(!idName.value && idName.type === 'text'){
-                isMissing = true;
-            }else{
-                if(idName.type !== 'submit' && idName.name){
-                    object[idName.name] = idName.value;
+                // État initial - menu fermé sur mobile
+                if (window.innerWidth <= 768) {
+                    menu.classList.add('collapsed');
+                    body.classList.add('menu-collapsed');
                 }
-            }
-        }
 
-        console.log(object, isMissing);
+                // Toggle du menu
+                menuToggleButton.addEventListener('click', function() {
+                    menu.classList.toggle('collapsed');
+                    body.classList.toggle('menu-collapsed');
+                });
+                
+                // Fermer le menu quand on clique sur un lien (uniquement sur mobile)
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            menu.classList.add('collapsed');
+                            body.classList.add('menu-collapsed');
+                        }
+                    });
+                });
+                
+                // Fermer le menu quand on clique en dehors (uniquement sur mobile)
+                document.addEventListener('click', function(event) {
+                    const isClickInsideMenu = menu.contains(event.target);
+                    const isClickOnButton = menuToggleButton.contains(event.target);
+                    
+                    if (!isClickInsideMenu && !isClickOnButton && !menu.classList.contains('collapsed') && window.innerWidth <= 768) {
+                        menu.classList.add('collapsed');
+                        body.classList.add('menu-collapsed');
+                    }
+                });
+                
+                // Gestion de la taille de l'écran
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth <= 768) {
+                        // Sur mobile, garder le menu fermé par défaut
+                        menu.classList.add('collapsed');
+                        body.classList.add('menu-collapsed');
+                    } else {
+                        // Sur desktop, ouvrir le menu par défaut
+                        menu.classList.remove('collapsed');
+                        body.classList.remove('menu-collapsed');
+                    }
+                });
 
-        if(isMissing === true){
-            alert("Nope");
-        }else{
-            localStorage.setItem("DataStorage", JSON.stringify(object));
-        }
-    }
+                // Gestion du formulaire
+                document.getElementById('form').addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    console.log(event);
+                    formSend(event);
+                });
 
-    //Vérifie la présence de donnée
-    if(localStorage.getItem("DataStorage")){
-        console.log(JSON.parse(localStorage.getItem("DataStorage")) );
-    }
+                function formSend(eventData) {
+                    let object = {};
+                    let isMissing = false;
 
-</script>
+                    for (let idName of eventData.target) {
+                        console.log(idName.value);
+                        if (idName.value === '' && idName.type === 'text') {
+                            isMissing = true;
+                        }
+
+                        if (!idName.value && idName.type === 'text') {
+                            isMissing = true;
+                        } else {
+                            if (idName.type !== 'submit' && idName.name) {
+                                object[idName.name] = idName.value;
+                            }
+                        }
+                    }
+
+                    console.log(object, isMissing);
+
+                    if (isMissing === true) {
+                        alert("Veuillez remplir tous les champs");
+                    } else {
+                        localStorage.setItem("DataStorage", JSON.stringify(object));
+                        alert("Film ajouté avec succès !");
+                    }
+                }
+
+                // Vérifie la présence de donnée
+                if (localStorage.getItem("DataStorage")) {
+                    console.log(JSON.parse(localStorage.getItem("DataStorage")));
+                }
+            });
+        </script>
+    </body>
+</html>

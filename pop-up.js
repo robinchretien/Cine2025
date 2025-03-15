@@ -9,6 +9,9 @@ function openFilmDetails(film) {
     
     const filmTitle = film["Titre du film"];
     
+    // Récupérer les informations du film depuis la base de données
+    const filmInfo = getFilmInfo(filmTitle);
+    
     // Formatter le titre pour le nom de fichier (remplacer les caractères spéciaux par des tirets)
     let formattedTitle = filmTitle
         .replace(/[:*…]/g, "-") // Remplacer : * et points de suspension unicode
@@ -17,8 +20,7 @@ function openFilmDetails(film) {
     // Cas spéciaux pour certains films
     const specialCases = {
         "Souviens toi": "Souviens-toi-l-ete-dernier",
-        "Conjuring : L'heure du jugement": "Conjuring-L-heure-du-jugement",
-        "Conjuring : L": "Conjuring-L-heure-du-jugement"
+        "Conjuring : L'heure du jugement": "Conjuring-L-heure-du-jugement"
     };
     
     // Vérifier si le titre est dans la liste des cas spéciaux
@@ -43,10 +45,10 @@ function openFilmDetails(film) {
             <div class="popup-info">
                 <h2>${filmTitle}</h2>
                 <p><strong>Date de sortie :</strong> ${film.Jour} ${film.Mois}</p>
-                <p><strong>Thème :</strong> test</p>
-                <p><strong>Réalisateur :</strong> test</p>
-                <p><strong>Acteurs principaux :</strong> test</p>
-                <p><strong>Synopsis :</strong> test</p>
+                <p><strong>Thème :</strong> ${filmInfo.theme}</p>
+                <p><strong>Réalisateur :</strong> ${filmInfo.realisateur}</p>
+                <p><strong>Acteurs principaux :</strong> ${filmInfo.acteurs}</p>
+                <p><strong>Synopsis :</strong> ${filmInfo.synopsis}</p>
             </div>
             <div class="popup-image" id="popup-image-container">
                 <!-- L'image sera insérée ici par JavaScript -->

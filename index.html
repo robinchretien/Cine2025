@@ -132,6 +132,34 @@
                 transform: scale(1.02);
             }
 
+            /* Styles pour le bouton de bande annonce */
+            .trailer-button-container {
+                margin-top: 20px;
+            }
+
+            .trailer-button {
+                display: inline-block;
+                background-color: #8a2be2;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                border: 2px solid #8a2be2;
+            }
+
+            .trailer-button:hover {
+                background-color: transparent;
+                color: #8a2be2;
+                box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+                transform: translateY(-2px);
+            }
+
+            .trailer-button:active {
+                transform: translateY(0);
+            }
+
             /* Rendre les lignes du tableau cliquables */
             #table tr:not(:first-child) {
                 cursor: pointer;

@@ -38,6 +38,18 @@ function openFilmDetails(film) {
     console.log("Titre formaté:", formattedTitle);
     console.log("Titre encodé:", encodedTitle);
     
+    // Préparer le bouton de bande-annonce s'il y a une URL
+    let trailerButton = '';
+    if (filmInfo.bandeAnnonce && filmInfo.bandeAnnonce.trim() !== '') {
+        trailerButton = `
+            <div class="trailer-button-container">
+                <a href="${filmInfo.bandeAnnonce}" target="_blank" class="trailer-button">
+                    Bande Annonce
+                </a>
+            </div>
+        `;
+    }
+    
     // Contenu de la pop-up
     popupContainer.innerHTML = `
         <div class="popup-close">&times;</div>
@@ -49,6 +61,7 @@ function openFilmDetails(film) {
                 <p><strong>Réalisateur :</strong> ${filmInfo.realisateur}</p>
                 <p><strong>Acteurs principaux :</strong> ${filmInfo.acteurs}</p>
                 <p><strong>Synopsis :</strong> ${filmInfo.synopsis}</p>
+                ${trailerButton}
             </div>
             <div class="popup-image" id="popup-image-container">
                 <!-- L'image sera insérée ici par JavaScript -->

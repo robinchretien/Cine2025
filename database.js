@@ -327,15 +327,42 @@ const filmDatabase = {
 
 // Fonction pour récupérer les informations d'un film
 function getFilmInfo(filmTitle) {
-    // Vérifier si le film existe dans la base de données
+    // Vérifier si le film existe dans la base de données prédéfinie
     if (filmDatabase[filmTitle]) {
         return filmDatabase[filmTitle];
-    }    
-
-    // Si le film n'est pas trouvé directement, essayer de le trouver par correspondance partielle
+    }
+    
+    // Si non trouvé, chercher dans les films ajoutés par l'utilisateur
+    const userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+    const userFilm = userFilms.find(film => film["Titre du film"] === filmTitle);
+    
+    if (userFilm) {
+        return {
+            theme: userFilm.theme || "Information non disponible",
+            realisateur: userFilm.realisateur || "Information non disponible",
+            acteurs: userFilm.acteurs || "Information non disponible", 
+            synopsis: userFilm.synopsis || "Information non disponible",
+            bandeAnnonce: userFilm.bandeAnnonce || ""
+        };
+    }
+    
+    // Si toujours pas trouvé, essayer par correspondance partielle dans la base de données prédéfinie
     for (const title in filmDatabase) {
         if (title.includes(filmTitle) || filmTitle.includes(title)) {
             return filmDatabase[title];
+        }
+    }
+    
+    // Essayer par correspondance partielle dans les films utilisateur
+    for (const film of userFilms) {
+        if (film["Titre du film"].includes(filmTitle) || filmTitle.includes(film["Titre du film"])) {
+            return {
+                theme: film.theme || "Information non disponible",
+                realisateur: film.realisateur || "Information non disponible",
+                acteurs: film.acteurs || "Information non disponible",
+                synopsis: film.synopsis || "Information non disponible",
+                bandeAnnonce: film.bandeAnnonce || ""
+            };
         }
     }
     
@@ -345,6 +372,6 @@ function getFilmInfo(filmTitle) {
         realisateur: "Information non disponible",
         acteurs: "Information non disponible",
         synopsis: "Information non disponible",
-        bandeAnnonce: ""  // Pas de bande-annonce par défaut
+        bandeAnnonce: ""
     };
 }

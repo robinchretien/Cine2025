@@ -122,16 +122,14 @@
                 // Gestion du formulaire
                 document.getElementById('form').addEventListener('submit', (event) => {
                     event.preventDefault();
-                    console.log(event);
                     formSend(event);
                 });
 
                 function formSend(eventData) {
-                    let object = {};
+                    let newFilm = {};
                     let isMissing = false;
 
                     for (let idName of eventData.target) {
-                        console.log(idName.value);
                         if (idName.value === '' && idName.type === 'text') {
                             isMissing = true;
                         }
@@ -140,26 +138,67 @@
                             isMissing = true;
                         } else {
                             if (idName.type !== 'submit' && idName.name) {
-                                object[idName.name] = idName.value;
+                                newFilm[idName.name] = idName.value;
                             }
                         }
                     }
 
-                    console.log(object, isMissing);
+                    console.log(newFilm, isMissing);
 
                     if (isMissing === true) {
                         alert("Veuillez remplir tous les champs");
                     } else {
-                        localStorage.setItem("DataStorage", JSON.stringify(object));
+                        // Structurer les données pour correspondre au format attendu dans le tableau
+                        const formattedFilm = {
+                            "Jour": newFilm.jour,
+                            "Mois": getMonthName(newFilm.mois), // Convertir le numéro de mois en nom
+                            "Titre du film": newFilm.titre,
+                            "theme": newFilm.theme,
+                            "realisateur": newFilm.realisateur,
+                            "acteurs": newFilm.acteur,
+                            "synopsis": newFilm.synopsis,
+                            "urlaffiche": newFilm.urlaffiche,
+                            "bandeAnnonce": ""  // Champ supplémentaire vide par défaut
+                        };
+
+                        // Récupérer les films ajoutés par l'utilisateur ou créer un tableau vide
+                        let userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+                        
+                        // Ajouter le nouveau film
+                        userFilms.push(formattedFilm);
+                        
+                        // Sauvegarder le tableau mis à jour
+                        localStorage.setItem("userFilms", JSON.stringify(userFilms));
+                        
                         alert("Film ajouté avec succès !");
+                        
+                        // Rediriger vers la page d'accueil
+                        window.location.href = "../index.html";
                     }
                 }
 
-                // Vérifie la présence de donnée
-                if (localStorage.getItem("DataStorage")) {
-                    console.log(JSON.parse(localStorage.getItem("DataStorage")));
+                // Fonction pour convertir le numéro de mois en nom
+                function getMonthName(monthNumber) {
+                    const months = {
+                        "01": "Janvier",
+                        "02": "Fevrier",
+                        "03": "Mars",
+                        "04": "Avril",
+                        "05": "Mai",
+                        "06": "Juin",
+                        "07": "Juillet",
+                        "08": "Août",
+                        "09": "Septembre",
+                        "10": "Octobre",
+                        "11": "Novembre",
+                        "12": "Decembre"
+                    };
+                    
+                    return months[monthNumber] || "";
                 }
             });
+
+            
         </script>
     </body>
 </html>

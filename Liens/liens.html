@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Liens</title>
+        <link rel="stylesheet" href="../index.css">
+        <link rel="stylesheet" href="./liens.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sigmar&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="menuToggleButton">
+            <img src="../menu-icon.png" alt="Menu">
+        </div>
+
+        <div class="menu-overlay"></div>
+
+        <nav class="menu">
+            <ul class="menuNavigation">
+                <li style="--item-index: 0"><a href="../index.html">Accueil</a></li>
+                <li style="--item-index: 1"><a href="../Ajout/ajout.html">Ajout</a></li>
+                <li style="--item-index: 2"><a href="./liens.html">Liens</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="section-accueil">
+                <div class="titre-section">
+                    <h1>Liens Documentaires</h1>
+                </div>
+            </section>
+
+            <!-- Filtres -->
+            <div class="filtres-container">
+                <button class="filtre-btn active" data-filtre="tous">Tous</button>
+                <button class="filtre-btn" data-filtre="sites">Sites Cinéma</button>
+                <button class="filtre-btn" data-filtre="streaming">Streaming</button>
+            </div>
+            
+            <!-- Grille de blocs -->
+            <div class="links-grid">
+                <!-- Bloc 1 -->
+                <div class="link-block" data-type="sites">
+                    <h3>Allociné</h3>
+                    <p>Site français de référence pour le cinéma</p>
+                    <a href="https://www.allocine.fr/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+                
+                <!-- Bloc 2 -->
+                <div class="link-block" data-type="sites">
+                    <h3>IMDb</h3>
+                    <p>Base de données internationale de films</p>
+                    <a href="https://www.imdb.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+                
+                <!-- Bloc 3 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Netflix</h3>
+                    <p>Plateforme de streaming par abonnement</p>
+                    <a href="https://www.netflix.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+                
+                <!-- Bloc 4 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Disney+</h3>
+                    <p>Service de streaming de Disney</p>
+                    <a href="https://www.disneyplus.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+                
+                <!-- Bloc 5 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Prime Video</h3>
+                    <p>Service de streaming d'Amazon</p>
+                    <a href="https://www.primevideo.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+                
+                <!-- Bloc 6 -->
+                <div class="link-block" data-type="sites">
+                    <h3>Première</h3>
+                    <p>Magazine français dédié au cinéma</p>
+                    <a href="https://www.premiere.fr/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 7 -->
+                <div class="link-block" data-type="sites">
+                    <h3>Rotten Tomatoes</h3>
+                    <p>Site de critique de cinéma</p>
+                    <a href="https://www.rottentomatoes.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 8 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Max</h3>
+                    <p>Films et séries HBO, Warner Bros, DC Comics et plus</p>
+                    <a href="https://www.hbomax.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 9 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Apple TV+</h3>
+                    <p>Serice de streaming d'Apple</p>
+                    <a href="https://www.apple.com/apple-tv-plus/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 10 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Paramount+</h3>
+                    <p>Contenu de Paramount, CBS, Comedy Central, Nickelodeon et MTV</p>
+                    <a href="https://www.paramountplus.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 11 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Crunchyroll</h3>
+                    <p>Service spécialisé en animation japonais et dramas asiatiques</p>
+                    <a href="https://www.crunchyroll.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+
+                <!-- Bloc 12 -->
+                <div class="link-block" data-type="streaming">
+                    <h3>Canal+ Streaming</h3>
+                    <p>Service français proposant films, séries et contenus sportifs</p>
+                    <a href="https://www.canalplus.com/" class="voir-plus" target="_blank">Voir plus →</a>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Menu toggle
+                const menu = document.querySelector('.menu');
+                const menuToggleButton = document.getElementById('menuToggleButton');
+                const menuOverlay = document.querySelector('.menu-overlay');
+                const menuLinks = document.querySelectorAll('.menuNavigation a');
+
+                // Toggle du menu
+                menuToggleButton.addEventListener('click', function() {
+                    menu.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
+                });
+                
+                // Fermer le menu quand on clique sur un lien
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        menu.classList.remove('active');
+                        menuOverlay.classList.remove('active');
+                    });
+                });
+                
+                // Fermer le menu quand on clique sur l'overlay
+                menuOverlay.addEventListener('click', function() {
+                    menu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                });
+                
+                // Gestion des filtres
+                const filtresBtns = document.querySelectorAll('.filtre-btn');
+                const linkBlocks = document.querySelectorAll('.link-block');
+                
+                filtresBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Retirer la classe active de tous les boutons
+                        filtresBtns.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Ajouter la classe active au bouton cliqué
+                        this.classList.add('active');
+                        
+                        // Filtrer les blocs
+                        const filtre = this.dataset.filtre;
+                        
+                        // Afficher/masquer les blocs selon le filtre
+                        linkBlocks.forEach(block => {
+                            if (filtre === 'tous') {
+                                block.style.display = 'block';
+                            } else {
+                                if (block.dataset.type === filtre) {
+                                    block.style.display = 'block';
+                                } else {
+                                    block.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

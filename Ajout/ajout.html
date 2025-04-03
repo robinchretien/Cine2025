@@ -36,16 +36,16 @@
 
             <form id="form" name="form" class="centered-form">
                 <div class="centerElement date-container">
-                    <select name="jour" id="jour">
-                        <option value="" disabled selected>Jour</option>
+                    <select name="jour" id="jour" required>
+                        <option value="" disabled selected>Jour *</option>
                         <script>
                             for (let i = 1; i <= 31; i++) {
                                 document.write(`<option value="${i}">${i}</option>`);
                             }
                         </script>
                     </select>                
-                    <select name="mois" id="mois">
-                        <option value="" disabled selected>Mois</option>
+                    <select name="mois" id="mois" required>
+                        <option value="" disabled selected>Mois *</option>
                         <option value="01">Janvier</option>
                         <option value="02">Février</option>
                         <option value="03">Mars</option>
@@ -62,7 +62,7 @@
                 </div>
                 
                 <div class="centerElement">
-                    <input name="titre" placeholder="Titre" id="titre" type="text"/> 
+                    <input name="titre" placeholder="Titre *" id="titre" type="text" required/> 
                 </div>
 
                 <div class="centerElement">
@@ -84,12 +84,34 @@
                 <div class="centerElement">
                     <input name="urlaffiche" placeholder="Url Affiche" id="urlaffiche" type="text"/> 
                 </div>
+
+                <div class="centerElement note-champs">
+                    <p>* Champs obligatoires</p>
+                </div>
     
                 <div class="centerElement">
                     <button type="submit" id="enregistrer"> Enregistrer </button>
                 </div>
+                
+                <div class="centerElement">
+                    <button type="button" id="supprimer" class="btn-delete"> Supprimer </button>
+                </div>
             </form>
         </main>
+
+        <!-- Pop-up de suppression -->
+        <div id="deletePopup" class="delete-popup">
+            <div class="delete-popup-content">
+                <div class="delete-popup-header">
+                    <h2>Supprimer des films</h2>
+                    <span class="close-popup">&times;</span>
+                </div>
+                <div class="delete-popup-body">
+                    <p class="no-films-message">Aucun film ajouté par l'utilisateur.</p>
+                    <ul id="userFilmsList" class="user-films-list"></ul>
+                </div>
+            </div>
+        </div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -128,53 +150,59 @@
                 function formSend(eventData) {
                     let newFilm = {};
                     let isMissing = false;
+                    
+                    // Vérification des champs obligatoires
+                    const jourValue = document.getElementById('jour').value;
+                    const moisValue = document.getElementById('mois').value;
+                    const titreValue = document.getElementById('titre').value;
+                    
+                    if (!jourValue || !moisValue || !titreValue) {
+                        isMissing = true;
+                        let message = "Veuillez remplir les champs obligatoires : ";
+                        if (!jourValue) message += "Jour, ";
+                        if (!moisValue) message += "Mois, ";
+                        if (!titreValue) message += "Titre, ";
+                        message = message.slice(0, -2); // Enlever la dernière virgule et l'espace
+                        
+                        alert(message);
+                        return;
+                    }
 
-                    for (let idName of eventData.target) {
-                        if (idName.value === '' && idName.type === 'text') {
-                            isMissing = true;
-                        }
-
-                        if (!idName.value && idName.type === 'text') {
-                            isMissing = true;
-                        } else {
-                            if (idName.type !== 'submit' && idName.name) {
-                                newFilm[idName.name] = idName.value;
-                            }
+                    // Récupération de toutes les valeurs
+                    for (let element of eventData.target.elements) {
+                        if (element.name && element.type !== 'submit') {
+                            newFilm[element.name] = element.value;
                         }
                     }
 
-                    console.log(newFilm, isMissing);
+                    console.log(newFilm);
 
-                    if (isMissing === true) {
-                        alert("Veuillez remplir tous les champs");
-                    } else {
-                        // Structurer les données pour correspondre au format attendu dans le tableau
-                        const formattedFilm = {
-                            "Jour": newFilm.jour,
-                            "Mois": getMonthName(newFilm.mois), // Convertir le numéro de mois en nom
-                            "Titre du film": newFilm.titre,
-                            "theme": newFilm.theme,
-                            "realisateur": newFilm.realisateur,
-                            "acteurs": newFilm.acteur,
-                            "synopsis": newFilm.synopsis,
-                            "urlaffiche": newFilm.urlaffiche,
-                            "bandeAnnonce": ""  // Champ supplémentaire vide par défaut
-                        };
+                    // Structurer les données pour correspondre au format attendu dans le tableau
+                    const formattedFilm = {
+                        "Jour": newFilm.jour,
+                        "Mois": getMonthName(newFilm.mois), // Convertir le numéro de mois en nom
+                        "Titre du film": newFilm.titre,
+                        "theme": newFilm.theme || "Information non disponible",
+                        "realisateur": newFilm.realisateur || "Information non disponible",
+                        "acteurs": newFilm.acteur || "Information non disponible",
+                        "synopsis": newFilm.synopsis || "Information non disponible",
+                        "urlaffiche": newFilm.urlaffiche || "",
+                        "bandeAnnonce": ""  // Champ supplémentaire vide par défaut
+                    };
 
-                        // Récupérer les films ajoutés par l'utilisateur ou créer un tableau vide
-                        let userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
-                        
-                        // Ajouter le nouveau film
-                        userFilms.push(formattedFilm);
-                        
-                        // Sauvegarder le tableau mis à jour
-                        localStorage.setItem("userFilms", JSON.stringify(userFilms));
-                        
-                        alert("Film ajouté avec succès !");
-                        
-                        // Rediriger vers la page d'accueil
-                        window.location.href = "../index.html";
-                    }
+                    // Récupérer les films ajoutés par l'utilisateur ou créer un tableau vide
+                    let userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+                    
+                    // Ajouter le nouveau film
+                    userFilms.push(formattedFilm);
+                    
+                    // Sauvegarder le tableau mis à jour
+                    localStorage.setItem("userFilms", JSON.stringify(userFilms));
+                    
+                    alert("Film ajouté avec succès !");
+                    
+                    // Rediriger vers la page d'accueil
+                    window.location.href = "../index.html";
                 }
 
                 // Fonction pour convertir le numéro de mois en nom
@@ -196,9 +224,97 @@
                     
                     return months[monthNumber] || "";
                 }
+                
+                // Gestion du pop-up de suppression
+                const deletePopup = document.getElementById('deletePopup');
+                const closePopup = document.querySelector('.close-popup');
+                const userFilmsList = document.getElementById('userFilmsList');
+                
+                // Ouvrir le pop-up de suppression
+                document.getElementById('supprimer').addEventListener('click', function() {
+                    showDeletePopup();
+                });
+                
+                // Fermer le pop-up quand on clique sur le X
+                closePopup.addEventListener('click', function() {
+                    deletePopup.style.display = 'none';
+                });
+                
+                // Fermer le pop-up quand on clique en dehors
+                window.addEventListener('click', function(event) {
+                    if (event.target === deletePopup) {
+                        deletePopup.style.display = 'none';
+                    }
+                });
+                
+                // Fonction pour afficher le pop-up de suppression
+                function showDeletePopup() {
+                    // Récupérer les films ajoutés par l'utilisateur
+                    const userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+                    
+                    // Vider la liste
+                    userFilmsList.innerHTML = '';
+                    
+                    // Cacher/montrer le message "aucun film" selon le cas
+                    const noFilmsMessage = document.querySelector('.no-films-message');
+                    if (userFilms.length === 0) {
+                        noFilmsMessage.style.display = 'block';
+                        userFilmsList.style.display = 'none';
+                    } else {
+                        noFilmsMessage.style.display = 'none';
+                        userFilmsList.style.display = 'block';
+                        
+                        // Ajouter chaque film à la liste
+                        userFilms.forEach((film, index) => {
+                            const listItem = document.createElement('li');
+                            listItem.className = 'film-item';
+                            
+                            const filmInfo = document.createElement('div');
+                            filmInfo.className = 'film-info';
+                            filmInfo.innerHTML = `
+                                <span class="film-title">${film["Titre du film"]}</span>
+                                <span class="film-date">${film.Jour} ${film.Mois}</span>
+                            `;
+                            
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'delete-film-btn';
+                            deleteBtn.innerHTML = '<i class="trash-icon">🗑️</i>';
+                            deleteBtn.title = 'Supprimer ce film';
+                            
+                            // Ajouter l'événement de suppression
+                            deleteBtn.addEventListener('click', function() {
+                                deleteUserFilm(index);
+                            });
+                            
+                            listItem.appendChild(filmInfo);
+                            listItem.appendChild(deleteBtn);
+                            userFilmsList.appendChild(listItem);
+                        });
+                    }
+                    
+                    // Afficher le pop-up
+                    deletePopup.style.display = 'block';
+                }
+                
+                // Fonction pour supprimer un film
+                function deleteUserFilm(index) {
+                    if (confirm('Êtes-vous sûr de vouloir supprimer ce film ?')) {
+                        // Récupérer les films
+                        let userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+                        
+                        // Supprimer le film
+                        userFilms.splice(index, 1);
+                        
+                        // Sauvegarder le tableau mis à jour
+                        localStorage.setItem("userFilms", JSON.stringify(userFilms));
+                        
+                        // Rafraîchir le pop-up
+                        showDeletePopup();
+                        
+                        alert('Film supprimé avec succès !');
+                    }
+                }
             });
-
-            
         </script>
     </body>
 </html>

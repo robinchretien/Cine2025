@@ -145,33 +145,36 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     // Afficher le tableau
-    document.getElementById("table").innerHTML = table.consituteTable();
+    const tableElement = document.getElementById("table");
+    if (tableElement) {
+        tableElement.innerHTML = table.consituteTable();
+        // NE PAS initialiser les clics ici si vous utilisez déjà pop-up.js
+    } else {
+        console.error("Élément avec id 'table' non trouvé");
+    }
 
     // Initialiser la recherche
-    document.getElementById("search").addEventListener("keyup", (event) => {
-        clearTimeout(searchTimeOut);
-        searchTimeOut = setTimeout(() => {
-            let searchValue = event.target.value.toLowerCase();
-            let filteredData = data.filter(film => 
-                film["Titre du film"].toLowerCase().includes(searchValue) ||
-                film["Mois"].toLowerCase().includes(searchValue) ||
-                film["Jour"].toLowerCase().includes(searchValue)
-            );
+    const searchElement = document.getElementById("search");
+    if (searchElement) {
+        searchElement.addEventListener("keyup", (event) => {
+            clearTimeout(searchTimeOut);
+            searchTimeOut = setTimeout(() => {
+                let searchValue = event.target.value.toLowerCase();
+                let filteredData = data.filter(film => 
+                    film["Titre du film"].toLowerCase().includes(searchValue) ||
+                    film["Mois"].toLowerCase().includes(searchValue) ||
+                    film["Jour"].toLowerCase().includes(searchValue)
+                );
 
-            if (filteredData.length > 0) {
-                table.setDataTable(filteredData);
-                document.getElementById("table").innerHTML = table.consituteTable();
-                
-                // Réinitialiser les événements de clic après mise à jour du tableau
-                if (typeof initializeTableRowClicks === 'function') {
-                    initializeTableRowClicks();
+                if (filteredData.length > 0) {
+                    table.setDataTable(filteredData);
+                    const tableElement = document.getElementById("table");
+                    if (tableElement) {
+                        tableElement.innerHTML = table.consituteTable();
+                        // NE PAS initialiser les clics ici si vous utilisez déjà pop-up.js
+                    }
                 }
-            }
-        }, 500);
-    });
-    
-    // Initialiser les clics sur les lignes du tableau pour la pop-up si la fonction existe
-    if (typeof initializeTableRowClicks === 'function') {
-        initializeTableRowClicks();
+            }, 500);
+        });
     }
 });

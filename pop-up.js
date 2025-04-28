@@ -1,200 +1,164 @@
-// Fonction pour ouvrir la pop-up avec les détails du film
-function openFilmDetails(film) {
-    // Création de l'élément pop-up
-    const popupOverlay = document.createElement('div');
-    popupOverlay.className = 'popup-overlay';
+// Fonction pour initialiser les clics sur les lignes du tableau
+function initializeTableRowClicks() {
+    // Sélectionner toutes les lignes du tableau (sauf l'en-tête)
+    const tableRows = document.querySelectorAll('#table tr:not(:first-child)');
     
-    const popupContainer = document.createElement('div');
-    popupContainer.className = 'popup-container';
+    // Ajouter un écouteur d'événement à chaque ligne
+    tableRows.forEach(row => {
+        row.addEventListener('click', function() {
+            // Récupérer le titre du film depuis la cellule appropriée
+            const cells = this.querySelectorAll('td');
+            if (cells.length >= 3) { // S'assurer qu'il y a au moins 3 cellules (Jour, Mois, Titre)
+                const movieTitle = cells[2].textContent.trim(); // Le titre est dans la 3ème cellule (index 2)
+                
+                // Afficher les détails du film
+                showMovieDetails(movieTitle);
+            }
+        });
+    });
+}
+
+// Fonction pour afficher les détails du film dans une pop-up
+function showMovieDetails(movieTitle) {
+    console.log("Affichage des détails pour le film:", movieTitle);
     
-    const filmTitle = film["Titre du film"];
+    // Récupérer les informations du film
+    let filmInfo;
+    let isUserFilm = false;
     
-    // Récupérer les informations du film depuis la base de données
-    const filmInfo = getFilmInfo(filmTitle);
+    // D'abord, vérifier dans les films ajoutés par l'utilisateur
+    const userFilms = JSON.parse(localStorage.getItem("userFilms")) || [];
+    const userFilm = userFilms.find(film => film["Titre du film"] === movieTitle);
     
-    // Formatter le titre pour le nom de fichier (remplacer les caractères spéciaux par des tirets)
-    let formattedTitle = filmTitle
-        .replace(/[:*…]/g, "-") // Remplacer : * et points de suspension unicode
-        .replace(/\.\.\./g, "-"); // Remplacer les points de suspension classiques
-    
-    // Cas spéciaux pour certains films
-    const specialCases = {
-        "Souviens toi": "Souviens-toi-l-ete-dernier",
-        "Conjuring : L'heure du jugement": "Conjuring-L-heure-du-jugement"
-    };
-    
-    // Vérifier si le titre est dans la liste des cas spéciaux
-    for (const key in specialCases) {
-        if (filmTitle.includes(key)) {
-            formattedTitle = specialCases[key];
-            break;
+    if (userFilm) {
+        // C'est un film ajouté par l'utilisateur, utiliser ses données
+        isUserFilm = true;
+        filmInfo = {
+            theme: userFilm.theme || "Information non disponible",
+            realisateur: userFilm.realisateur || "Information non disponible",
+            acteurs: userFilm.acteurs || "Information non disponible", 
+            synopsis: userFilm.synopsis || "Information non disponible",
+            bandeAnnonce: userFilm.bandeAnnonce || "",
+            urlaffiche: userFilm.urlaffiche || ""
+        };
+        console.log("Film utilisateur trouvé:", userFilm);
+    } else {
+        // Sinon, utiliser la fonction getFilmInfo du fichier database.js
+        if (typeof getFilmInfo === 'function') {
+            filmInfo = getFilmInfo(movieTitle);
+            console.log("Informations obtenues depuis la base de données:", filmInfo);
+        } else {
+            // Fallback si la fonction n'est pas disponible
+            console.warn("Fonction getFilmInfo non disponible");
+            filmInfo = {
+                theme: "Information non disponible",
+                realisateur: "Information non disponible",
+                acteurs: "Information non disponible",
+                synopsis: "Information non disponible",
+                bandeAnnonce: "",
+                urlaffiche: ""
+            };
         }
     }
     
-    const encodedTitle = encodeURIComponent(formattedTitle);
+    // Créer ou réutiliser la pop-up
+    let popup = document.getElementById('moviePopup');
+    if (!popup) {
+        popup = document.createElement('div');
+        popup.id = 'moviePopup';
+        popup.className = 'movie-popup';
+        document.body.appendChild(popup);
+    }
     
-    // Pour le débogage
-    console.log("Titre original:", filmTitle);
-    console.log("Titre formaté:", formattedTitle);
-    console.log("Titre encodé:", encodedTitle);
+    // Déterminer l'URL de l'affiche
+    let afficheUrl = '';
     
-    // Préparer le bouton de bande-annonce s'il y a une URL
-    let trailerButton = '';
-    if (filmInfo.bandeAnnonce && filmInfo.bandeAnnonce.trim() !== '') {
-        trailerButton = `
-            <div class="trailer-button-container">
+    if (isUserFilm && filmInfo.urlaffiche) {
+        // Utiliser l'URL de l'affiche fournie par l'utilisateur
+        afficheUrl = filmInfo.urlaffiche;
+        console.log("Utilisation de l'URL d'affiche utilisateur:", afficheUrl);
+    } else {
+        // Essayer de trouver l'affiche dans le dossier des affiches
+        // Convertir le titre pour en faire un nom de fichier valide
+        const filename = movieTitle.toLowerCase()
+            .replace(/[^\w\s]/gi, '') // Supprimer les caractères spéciaux
+            .replace(/\s+/g, '_')     // Remplacer les espaces par des underscores
+            + '.jpg';
+        afficheUrl = `./affiches/${filename}`;
+        console.log("Utilisation de l'affiche locale:", afficheUrl);
+    }
+    
+    // Créer le contenu HTML de la pop-up
+    let bandeAnnonceHTML = '';
+    if (filmInfo.bandeAnnonce) {
+        bandeAnnonceHTML = `
+            <div class="movie-trailer">
                 <a href="${filmInfo.bandeAnnonce}" target="_blank" class="trailer-button">
-                    Bande Annonce
+                    Voir la bande-annonce
                 </a>
             </div>
         `;
     }
     
-    // Contenu de la pop-up
-    popupContainer.innerHTML = `
-        <div class="popup-close">&times;</div>
+    // Remplir la pop-up
+    popup.innerHTML = `
         <div class="popup-content">
-            <div class="popup-info">
-                <h2>${filmTitle}</h2>
-                <p><strong>Date de sortie :</strong> ${film.Jour} ${film.Mois}</p>
-                <p><strong>Thème :</strong> ${filmInfo.theme}</p>
-                <p><strong>Réalisateur :</strong> ${filmInfo.realisateur}</p>
-                <p><strong>Acteurs principaux :</strong> ${filmInfo.acteurs}</p>
-                <p><strong>Synopsis :</strong> ${filmInfo.synopsis}</p>
-                ${trailerButton}
-            </div>
-            <div class="popup-image" id="popup-image-container">
-                <!-- L'image sera insérée ici par JavaScript -->
+            <span class="close-button">&times;</span>
+            <div class="movie-details">
+                <div class="movie-poster">
+                    <img src="${afficheUrl}" alt="Affiche de ${movieTitle}" onerror="this.src='./affiches/placeholder.jpg'">
+                </div>
+                <div class="movie-info">
+                    <h2>${movieTitle}</h2>
+                    <div class="info-section">
+                        <h3>Thème</h3>
+                        <p>${filmInfo.theme}</p>
+                    </div>
+                    <div class="info-section">
+                        <h3>Réalisateur</h3>
+                        <p>${filmInfo.realisateur}</p>
+                    </div>
+                    <div class="info-section">
+                        <h3>Acteurs</h3>
+                        <p>${filmInfo.acteurs}</p>
+                    </div>
+                    <div class="info-section">
+                        <h3>Synopsis</h3>
+                        <p>${filmInfo.synopsis}</p>
+                    </div>
+                    ${bandeAnnonceHTML}
+                </div>
             </div>
         </div>
     `;
     
-    // Ajouter le popup au document
-    popupOverlay.appendChild(popupContainer);
-    document.body.appendChild(popupOverlay);
+    // Afficher la pop-up
+    popup.style.display = 'block';
     
-    // Empêcher le défilement du body
-    document.body.style.overflow = 'hidden';
-    
-    // Animation d'entrée
-    setTimeout(() => {
-        popupOverlay.classList.add('active');
-        popupContainer.classList.add('active');
-    }, 10);
-    
-    // Gestion plus robuste du chargement des images
-    loadImageWithFallbacks(encodedTitle, filmTitle);
-    
-    // Fermeture du popup au clic sur le bouton de fermeture
-    const closeButton = popupContainer.querySelector('.popup-close');
-    closeButton.addEventListener('click', closePopup);
-    
-    // Fermeture du popup au clic en dehors du contenu
-    popupOverlay.addEventListener('click', function(e) {
-        if (e.target === popupOverlay) {
-            closePopup();
-        }
+    // Ajouter l'écouteur pour fermer la pop-up
+    const closeButton = popup.querySelector('.close-button');
+    closeButton.addEventListener('click', function() {
+        popup.style.display = 'none';
     });
     
-    // Fermeture du popup avec la touche Echap
-    document.addEventListener('keydown', handleEscapeKey);
-}
-
-// Fonction pour charger une image avec fallbacks
-function loadImageWithFallbacks(encodedTitle, originalTitle) {
-    const imageContainer = document.getElementById('popup-image-container');
-    const formats = ['jpg', 'png', 'webp'];
-    let currentFormatIndex = 0;
-    
-    // Créer un élément image
-    const img = document.createElement('img');
-    img.alt = `Affiche de ${originalTitle}`;
-    
-    // Fonction pour essayer le format suivant ou afficher l'image par défaut
-    function tryNextFormat() {
-        if (currentFormatIndex < formats.length) {
-            const format = formats[currentFormatIndex];
-            img.src = `./affiches/${encodedTitle}.${format}`;
-            console.log(`Tentative de chargement: ${img.src}`);
-            currentFormatIndex++;
-        } else {
-            // Si tous les formats ont échoué, utiliser l'image par défaut
-            img.src = './affiches/default.webp';
-            console.log("Utilisation de l'image par défaut");
-        }
-    }
-    
-    // Gestionnaire d'erreur
-    img.onerror = tryNextFormat;
-    
-    // Démarrer avec le premier format
-    tryNextFormat();
-    
-    // Ajouter l'image au conteneur
-    imageContainer.appendChild(img);
-}
-
-// Fonction pour fermer la pop-up
-function closePopup() {
-    const popupOverlay = document.querySelector('.popup-overlay');
-    const popupContainer = document.querySelector('.popup-container');
-    
-    if (popupOverlay && popupContainer) {
-        // Animation de sortie
-        popupOverlay.classList.remove('active');
-        popupContainer.classList.remove('active');
-        
-        // Supprimer l'élément après l'animation
-        setTimeout(() => {
-            document.body.removeChild(popupOverlay);
-            document.body.style.overflow = 'auto'; // Restaurer le défilement
-        }, 300);
-        
-        // Retirer l'écouteur d'événement pour la touche Echap
-        document.removeEventListener('keydown', handleEscapeKey);
-    }
-}
-
-// Fonction pour gérer la fermeture avec la touche Echap
-function handleEscapeKey(e) {
-    if (e.key === 'Escape') {
-        closePopup();
-    }
-}
-
-// Initialiser les événements de clic sur les lignes du tableau
-function initializeTableRowClicks() {
-    const table = document.getElementById('table');
-    
-    // Délégation d'événement pour capturer les clics sur les lignes du tableau
-    table.addEventListener('click', function(e) {
-        // Remonter jusqu'à la ligne du tableau la plus proche
-        let target = e.target;
-        while (target && target !== this && target.tagName !== 'TR') {
-            target = target.parentNode;
-        }
-        
-        // Si on a cliqué sur une ligne (pas l'en-tête)
-        if (target && target.tagName === 'TR' && !target.querySelector('th')) {
-            // Trouver les cellules de la ligne
-            const cells = target.querySelectorAll('td');
-            if (cells.length >= 3) {
-                // Récupérer les informations du film à partir des cellules
-                const filmInfo = {
-                    "Jour": cells[0].textContent,
-                    "Mois": cells[1].textContent,
-                    "Titre du film": cells[2].textContent
-                };
-                
-                // Ouvrir la pop-up avec les informations du film
-                openFilmDetails(filmInfo);
-            }
+    // Fermer la pop-up si on clique en dehors du contenu
+    window.addEventListener('click', function(event) {
+        if (event.target === popup) {
+            popup.style.display = 'none';
         }
     });
 }
 
-// Initialiser lorsque le contenu du DOM est chargé
+// Initialiser les clics sur les lignes du tableau au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialiser les clics sur les lignes du tableau
     initializeTableRowClicks();
+    
+    // Réinitialiser les événements après chaque recherche
+    const searchElement = document.getElementById("search");
+    if (searchElement) {
+        searchElement.addEventListener('keyup', function() {
+            // Attendre un peu pour que le tableau soit mis à jour
+            setTimeout(initializeTableRowClicks, 600);
+        });
+    }
 });
